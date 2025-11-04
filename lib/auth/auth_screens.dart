@@ -13,34 +13,36 @@ class AuthScreens extends StatelessWidget {
       ),
 
       body: SafeArea(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Column(
-                  children: [
-                    CustomPaint(
-                      size: Size(double.infinity, 200),
-                      painter: CurvedArc(),
-                    ),
-                    CustomPaint(
-                      size: Size(double.infinity, 200),
-                      painter: CurvedArc(),
-                    )
-                  ],
-                ),
-                Image.asset(
-                  'assets/images/man.png',
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-                SizedBox(
-                  height: 810,
-                  child: AuthDraggableScroll()
-                )
-              ],
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Column(
+                    children: [
+                      CustomPaint(
+                        size: Size(double.infinity, 200),
+                        painter: CurvedArc(),
+                      ),
+                      CustomPaint(
+                        size: Size(double.infinity, 200),
+                        painter: CurvedArc(),
+                      )
+                    ],
+                  ),
+                  Image.asset(
+                    'assets/images/man.png',
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                  SizedBox(
+                    height: 930,
+                    child: AuthDraggableScroll()
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
