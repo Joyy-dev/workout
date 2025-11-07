@@ -13,6 +13,7 @@ class _AuthDraggableScrollState extends State<AuthDraggableScroll> {
   final _password = TextEditingController();
   final _confirmPassword = TextEditingController();
   bool _obscureText = true;
+  bool _isLogin = true;
 
   @override
   void dispose() {
@@ -29,28 +30,29 @@ class _AuthDraggableScrollState extends State<AuthDraggableScroll> {
       initialChildSize: 0.5,
       minChildSize: 0.4,
       builder: (context, scrollController) {
-        return SafeArea(
-          child: SingleChildScrollView(
-          controller: scrollController,
-            child: Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40),
-                  topRight: Radius.circular(40)
-                ),
-                color: Color(0xFFD4D4D4)
-              ),
+        return Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40),
+              topRight: Radius.circular(40)
+            ),
+            color: Color(0xFFD4D4D4)
+          ),
+          child: SafeArea(
+            child: SingleChildScrollView(
+              controller: scrollController,
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Create an account',
+                      _isLogin ? 'Hello \n Sign In' : 'Create Your \n Account',
                       style: TextStyle(
-                        fontSize: 19
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                     SizedBox(height: 20,),
@@ -91,7 +93,7 @@ class _AuthDraggableScrollState extends State<AuthDraggableScroll> {
                             borderRadius: BorderRadius.circular(10)
                           )
                         ),
-                        obscureText: true,
+                        obscureText: _obscureText,
                         validator: (value) {
                           if (value == null || value.length < 8) {
                             return 'Password must contain atleast 8 characters';
@@ -101,6 +103,7 @@ class _AuthDraggableScrollState extends State<AuthDraggableScroll> {
                       ),
                     ),
                     SizedBox(height: 20,),
+                    if (!_isLogin)
                     Card(
                       elevation: 5,
                       child: TextFormField(
@@ -119,9 +122,9 @@ class _AuthDraggableScrollState extends State<AuthDraggableScroll> {
                             borderRadius: BorderRadius.circular(10)
                           )
                         ),
-                        obscureText: true,
+                        obscureText: _obscureText,
                         validator: (value) {
-                          if (value == null) {
+                          if (value == null || value != _password.text) {
                             return 'Password does not match';
                           }
                           return null;
@@ -137,14 +140,18 @@ class _AuthDraggableScrollState extends State<AuthDraggableScroll> {
                         ),
                         onPressed: () {}, 
                         child: Text(
-                          'Sign Up'
+                          _isLogin ? 'Sign In' : 'Sign Up' 
                         )
                       ),
                     ),
                     TextButton(
-                      onPressed: () {}, 
+                      onPressed: () {
+                        setState(() {
+                          _isLogin = !_isLogin;
+                        });
+                      }, 
                       child: Text(
-                        'Already have an account? Sign In'
+                        _isLogin ? 'Don\'t have an account? Sign Up' : 'Already have an account? Sign In'
                       )
                     )
                   ],
