@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:workout/screen/home_screens.dart';
 
 class AuthDraggableScroll extends StatefulWidget {
   const AuthDraggableScroll({super.key});
@@ -21,6 +23,74 @@ class _AuthDraggableScrollState extends State<AuthDraggableScroll> {
     _password.dispose();
     _confirmPassword.dispose();
     super.dispose();
+  }
+
+  Future<void> _submitAuthForm() async {
+    if (_formKey.currentState!.validate()) {
+      final email = _emailController.text.trim();
+      final password = _password.text.trim(); 
+      final confirmPassword = _confirmPassword.text.trim();
+
+      try {
+        if (_isLogin) {
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: email, 
+            password: password
+          );
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Welcome back'))
+          );
+          Navigator.push(
+            context, 
+            MaterialPageRoute(builder: (context) => HomeScreens())
+          );
+        } else {
+          if (password != confirmPassword) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Password do not match'))
+            );
+            return;
+          }
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: email, 
+            password: password
+          );
+          print('Successful');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Account successfully created!!'))
+          );
+          Navigator.push(
+            context, 
+            MaterialPageRoute(builder: (context) => HomeScreens())
+          );
+        }
+      } on FirebaseAuthException catch(error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error.message ?? 'Authentication Failed!'))
+        );
+      } catch(error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Oops!! Something: $error'))
+        );
+      }
+    } 
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+Navigator.push(
+        context, 
+        MaterialPageRoute(builder: (context) => HomeScreens())
+      );
+      });
+      
+    }
+    
   }
 
   @override
@@ -138,7 +208,7 @@ class _AuthDraggableScrollState extends State<AuthDraggableScroll> {
                           backgroundColor: Color(0xFF12005F),
                           foregroundColor: Colors.white
                         ),
-                        onPressed: () {}, 
+                        onPressed: _submitAuthForm, 
                         child: Text(
                           _isLogin ? 'Sign In' : 'Sign Up' 
                         )
