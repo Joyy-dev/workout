@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:workout/auth/auth_screens.dart';
+import 'package:workout/auth/auth.dart';
 import 'package:workout/widgets/curved_arc.dart';
 
 class GettingStartedScreen extends StatelessWidget {
@@ -65,7 +65,7 @@ class GettingStartedScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context, 
-                            MaterialPageRoute(builder: (context) => AuthScreens())
+                            MaterialPageRoute(builder: (context) => Auth())
                           );
                         }, 
                         style: ElevatedButton.styleFrom(

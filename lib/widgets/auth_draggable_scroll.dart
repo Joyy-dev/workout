@@ -83,12 +83,11 @@ class _AuthDraggableScrollState extends State<AuthDraggableScroll> {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-Navigator.push(
-        context, 
-        MaterialPageRoute(builder: (context) => HomeScreens())
-      );
+          Navigator.push(
+          context, 
+          MaterialPageRoute(builder: (context) => HomeScreens())
+        );
       });
-      
     }
     
   }
