@@ -79,18 +79,7 @@ class GettingStartedScreen extends StatelessWidget {
                           ),
                         )
                       ),
-                      Row(
-                        children: [
-                          Icon(Icons.chevron_right_outlined, color: Colors.white,),
-                          Transform.translate(
-                            offset: Offset(-13, 0),
-                            child: Icon(
-                              Icons.chevron_right_outlined, 
-                              color: Colors.white,
-                            )
-                          )
-                        ],
-                      )
+                      Icon(Icons.double_arrow, color: Colors.white, size: 35,)
                     ],
                   ),
                 )

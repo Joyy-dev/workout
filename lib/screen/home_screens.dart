@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:workout/widgets/metrics.dart';
+import 'package:workout/widgets/workout_chart.dart';
 
 class HomeScreens extends StatelessWidget {
   const HomeScreens({super.key});
@@ -27,7 +29,7 @@ class HomeScreens extends StatelessWidget {
       backgroundColor: Color(0xFFD4D4D4),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
               Row(
@@ -64,6 +66,40 @@ class HomeScreens extends StatelessWidget {
                       color: Colors.white
                     ),
                     child: Icon(Icons.notifications_outlined),
+                  )
+                ],
+              ),
+              SizedBox(height: 20,),
+              WorkoutChart(),
+              SizedBox(height: 20,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Your Metrics',
+                    style: TextStyle(
+                      fontSize: 15
+                    ),
+                  ),
+                  Text(
+                    'see all'
+                  )
+                ],
+              ),
+              SizedBox(height: 15,),
+              Metrics(),
+              SizedBox(height: 20,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Suggested Workouts',
+                    style: TextStyle(
+                      fontSize: 18
+                    ),
+                  ),
+                  Text(
+                    'See all'
                   )
                 ],
               )
