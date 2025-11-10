@@ -39,6 +39,7 @@ dependencies:
   cloud_firestore: ^6.1.0
   fl_chart: ^1.1.1
   flutter_svg: ^2.2.2
+  provider: ^6.1.5+1
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,12 @@ flutter:
    - assets/images/gym.png
    - assets/images/bg.png
    - assets/images/man.png
+   - assets/images/cycle.png
+   - assets/images/dance.png
+   - assets/images/hike.png
+   - assets/images/run.png
+   - assets/images/swim.png
+   - assets/images/walk.png
    - assets/svg/Fire.svg
    - assets/svg/Vector.svg
   #   - images/a_dot_ham.jpeg

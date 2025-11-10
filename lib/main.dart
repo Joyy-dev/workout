@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:workout/firebase_options.dart';
+import 'package:workout/model/workout.dart';
 import 'package:workout/screen/getting_started_screen.dart';
 
 void main() async {
@@ -16,13 +18,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'WorkOut App',
-      color: Colors.white,
-      theme: ThemeData(
-        fontFamily: 'Poppins'
+    return ChangeNotifierProvider(
+      create: (context) {
+        return pleasure();
+      },
+      child: MaterialApp(
+        title: 'WorkOut App',
+        color: Colors.white,
+        theme: ThemeData(
+          fontFamily: 'Poppins'
+        ),
+        home: GettingStartedScreen(),
       ),
-      home: GettingStartedScreen(),
     );
   }
 }
