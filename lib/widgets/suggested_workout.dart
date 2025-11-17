@@ -7,7 +7,7 @@ class SuggestedWorkout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final exercise = Provider.of<pleasure>(context);
+    final exercise = Provider.of<Pleasure>(context);
     final woe = exercise.execise;
     return SizedBox(
       height: 300,

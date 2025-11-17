@@ -55,7 +55,6 @@ class _AuthDraggableScrollState extends State<AuthDraggableScroll> {
             email: email, 
             password: password
           );
-          print('Successful');
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Account successfully created!!'))
           );

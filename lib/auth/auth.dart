@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:workout/auth/auth_screens.dart';
-import 'package:workout/screen/home_screens.dart';
+import 'package:workout/widgets/navigation.dart';
 
 class Auth extends StatelessWidget {
   const Auth({super.key});
@@ -17,7 +17,7 @@ class Auth extends StatelessWidget {
           );
         }
         if (snapshot.hasData) {
-          return HomeScreens();
+          return Navigation();
         } else {
           return AuthScreens();
         }

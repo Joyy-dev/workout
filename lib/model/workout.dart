@@ -13,7 +13,7 @@ class Workout {
     required this.image
   });
 }
-class pleasure with ChangeNotifier {
+class Pleasure with ChangeNotifier {
     final List<Workout> _excercise = [
       Workout(
         id: '01', 

@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) {
-        return pleasure();
+        return Pleasure();
       },
       child: MaterialApp(
         title: 'WorkOut App',

@@ -32,27 +32,6 @@ class _HomeScreensState extends State<HomeScreens> {
         final user = snapshot.data!;
         final firstName = extractFirstName(user.email ?? '');
         return  Scaffold(
-          // bottomNavigationBar: Padding(
-          //   padding: const EdgeInsets.only(
-          //     top: 10,
-          //     bottom: 15,
-          //     left: 15,
-          //     right: 15
-          //   ),
-          //   child: BottomNavigationBar(
-          //     showSelectedLabels: true,
-          //     showUnselectedLabels: false,
-          //     unselectedItemColor: Colors.grey,
-          //     selectedItemColor: Color(0xFF12005F),
-          //     items: [
-          //       BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
-          //       BottomNavigationBarItem(icon: Icon(Icons.history_outlined), label: 'History'),
-          //       BottomNavigationBarItem(icon: Icon(Icons.bar_chart_outlined), label: 'Stat'),
-          //       BottomNavigationBarItem(icon: Icon(Icons.calendar_view_day_outlined), label: 'Calender'),
-          //       BottomNavigationBarItem(icon: Icon(Icons.person_2_outlined), label: 'Profile')
-          //     ]
-          //   ),
-          // ),
           backgroundColor: Color(0xFFD4D4D4),
           body: SafeArea(
             child: SingleChildScrollView(
