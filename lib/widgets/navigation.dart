@@ -22,7 +22,7 @@ class _NavigationState extends State<Navigation> {
     Icons.history,
     Icons.bar_chart,
     Icons.calendar_today,
-    Icons.person_3_outlined
+    Icons.account_circle_outlined
   ];
 
   List<String> label = [
@@ -99,7 +99,11 @@ class _NavigationState extends State<Navigation> {
           ),
         ),
       ),
-      body: screens[selectedIndex],
+      //body: screens[selectedIndex],
+      body: IndexedStack(
+        index: selectedIndex,
+        children: screens,
+      ),
     );
   }
 }
