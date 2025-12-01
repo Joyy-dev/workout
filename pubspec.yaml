@@ -40,6 +40,7 @@ dependencies:
   fl_chart: ^1.1.1
   flutter_svg: ^2.2.2
   provider: ^6.1.5+1
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,7 @@ flutter:
    - assets/images/run.png
    - assets/images/swim.png
    - assets/images/walk.png
+   - assets/images/active.png
    - assets/svg/Fire.svg
    - assets/svg/Vector.svg
   #   - images/a_dot_ham.jpeg

@@ -15,7 +15,7 @@ class Distance extends StatelessWidget {
           ListTile(
             leading: CircleAvatar(
               backgroundColor: Color(0xFF12005F),
-              child: Icon(Icons.auto_graph_outlined, color: Colors.white,),
+              child: Icon(Icons.show_chart, color: Colors.white,),
             ),
             title: Text(
               'Distance Increase 37%'
@@ -44,10 +44,13 @@ class Distance extends StatelessWidget {
                             fontSize: 25
                           ),
                         ),
-                        Text(
-                          'm',
-                          style: TextStyle(
-                            fontSize: 12
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Text(
+                            'm',
+                            style: TextStyle(
+                              fontSize: 12
+                            ),
                           ),
                         )
                       ],
@@ -69,10 +72,13 @@ class Distance extends StatelessWidget {
                             fontSize: 25
                           ),
                         ),
-                        Text(
-                          'm',
-                          style: TextStyle(
-                            fontSize: 12
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Text(
+                            'm',
+                            style: TextStyle(
+                              fontSize: 12
+                            ),
                           ),
                         )
                       ],
@@ -80,6 +86,7 @@ class Distance extends StatelessWidget {
                   ],
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Point'
@@ -87,16 +94,32 @@ class Distance extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '1.136'
+                          '1.136',
+                          style: TextStyle(
+                            fontSize: 25
+                          ),
                         ),
-                        Text(
-                          'm'
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            'm',
+                            style: TextStyle(
+                              fontSize: 12
+                            ),
+                          ),
                         )
                       ],
                     )
                   ],
                 )
               ],
+            ),
+          ),
+          SizedBox(height: 10,),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Divider(
+              color: const Color.fromARGB(255, 224, 224, 224),
             ),
           )
         ],

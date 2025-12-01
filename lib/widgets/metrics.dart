@@ -33,14 +33,16 @@ class Metrics extends StatelessWidget {
                   Text(
                     '2.9',
                     style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold
+                      fontSize: 25,
                     ),
                   ),
-                  Text(
-                    'Liters',
-                    style: TextStyle(
-                      fontSize: 13
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text(
+                      'Liters',
+                      style: TextStyle(
+                        fontSize: 13
+                      ),
                     ),
                   )
                 ],
@@ -74,14 +76,16 @@ class Metrics extends StatelessWidget {
                   Text(
                     '2.9',
                     style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold
+                      fontSize: 25,
                     ),
                   ),
-                  Text(
-                    'Cal',
-                    style: TextStyle(
-                      fontSize: 13
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text(
+                      'Cal',
+                      style: TextStyle(
+                        fontSize: 12
+                      ),
                     ),
                   )
                 ],
@@ -115,14 +119,16 @@ class Metrics extends StatelessWidget {
                   Text(
                     '76',
                     style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold
+                      fontSize: 25,
                     ),
                   ),
-                  Text(
-                    'Bpm',
-                    style: TextStyle(
-                      fontSize: 13
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text(
+                      'Bpm',
+                      style: TextStyle(
+                        fontSize: 12
+                      ),
                     ),
                   )
                 ],

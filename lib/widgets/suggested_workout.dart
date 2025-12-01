@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:workout/model/workout.dart';
+import 'package:workout/provider/workout_provider.dart';
 
 class SuggestedWorkout extends StatelessWidget {
   const SuggestedWorkout({super.key});

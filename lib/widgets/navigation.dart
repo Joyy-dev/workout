@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workout/screen/history_screen.dart';
 import 'package:workout/screen/home_screens.dart';
+import 'package:workout/screen/progress_screen.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
@@ -14,7 +16,8 @@ class _NavigationState extends State<Navigation> {
 
   List<Widget> screens = [
     HomeScreens(),
-    HistoryScreen()
+    HistoryScreen(),
+    ProgressScreen()
   ];
 
   List <IconData> icons = [
@@ -32,6 +35,25 @@ class _NavigationState extends State<Navigation> {
     'Calender',
     'Profile'
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSelectedIndex();
+  }
+
+  _loadSelectedIndex() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      selectedIndex = prefs.getInt('selectedIndex') ?? 0;
+    });
+  }
+
+  _saveSelectedIndex(int index) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('selectedIndex', index);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +88,7 @@ class _NavigationState extends State<Navigation> {
                 onTap: () {
                   setState(() {
                     selectedIndex = index;
+                    _saveSelectedIndex(index);
                   });
                 },
                 child: AnimatedContainer(
