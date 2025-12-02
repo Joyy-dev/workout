@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workout/screen/history_screen.dart';
 import 'package:workout/screen/home_screens.dart';
+import 'package:workout/screen/my_account_screen.dart';
 import 'package:workout/screen/progress_screen.dart';
+import 'package:workout/screen/to_do_list_screen.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
@@ -17,7 +19,9 @@ class _NavigationState extends State<Navigation> {
   List<Widget> screens = [
     HomeScreens(),
     HistoryScreen(),
-    ProgressScreen()
+    ProgressScreen(),
+    ToDoListScreen(),
+    MyAccountScreen()
   ];
 
   List <IconData> icons = [
