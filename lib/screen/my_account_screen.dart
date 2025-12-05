@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:workout/screen/physical_activity_screen.dart';
 
 class MyAccountScreen extends StatefulWidget {
   const MyAccountScreen({super.key});
@@ -116,15 +117,25 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   ),
                   title: Text('Add Activity'),
                 ),
-                ListTile(
-                  contentPadding: EdgeInsets.all(1),
-                  leading: CircleAvatar(
-                    child: Icon(Icons.signal_wifi_statusbar_connected_no_internet_4),
-                  ),
-                  title: Text('Physical Status'),
-                  trailing: IconButton(
-                    onPressed: () {}, 
-                    icon: Icon(Icons.chevron_right)
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                        builder: (context) => PhysicalActivityScreen()
+                      )
+                    );
+                  },
+                  child: ListTile(
+                    contentPadding: EdgeInsets.all(1),
+                    leading: CircleAvatar(
+                      child: Icon(Icons.signal_wifi_statusbar_connected_no_internet_4),
+                    ),
+                    title: Text('Physical Status'),
+                    trailing: IconButton(
+                      onPressed: () {}, 
+                      icon: Icon(Icons.chevron_right)
+                    ),
                   ),
                 ),
                 ListTile(
