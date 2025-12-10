@@ -145,12 +145,17 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   ),
                   title: Text('Activity statistics'),
                 ),
-                ListTile(
-                  contentPadding: EdgeInsets.all(1),
-                  leading: CircleAvatar(
-                    child: Icon(Icons.logout),
+                GestureDetector(
+                  onTap: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                  child: ListTile(
+                    contentPadding: EdgeInsets.all(1),
+                    leading: CircleAvatar(
+                      child: Icon(Icons.logout),
+                    ),
+                    title: Text('Logout'),
                   ),
-                  title: Text('Logout'),
                 )
               ],
             ),

@@ -24,7 +24,7 @@ class _GenderChecklistState extends State<GenderChecklist> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey[200],
+              color: Colors.white,
               borderRadius: BorderRadius.circular(10)
             ),
             child: ListTile(
@@ -44,7 +44,7 @@ class _GenderChecklistState extends State<GenderChecklist> {
           SizedBox(height: 15,),
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey[200],
+              color: Colors.white,
               borderRadius: BorderRadius.circular(10)
             ),
             child: ListTile(
@@ -64,7 +64,7 @@ class _GenderChecklistState extends State<GenderChecklist> {
           SizedBox(height: 15,),
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey[200],
+              color: Colors.white,
               borderRadius: BorderRadius.circular(10)
             ),
             child: ListTile(
