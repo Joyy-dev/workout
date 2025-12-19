@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:workout/screen/account_info_screens.dart';
 import 'package:workout/screen/physical_activity_screen.dart';
 
 class MyAccountScreen extends StatefulWidget {
@@ -99,15 +100,30 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   ),
                 ),
                 SizedBox(height: 15,),
-                ListTile(
-                  contentPadding: EdgeInsets.all(1),
-                  leading: CircleAvatar(
-                    child: Icon(Icons.account_circle_outlined),
-                  ),
-                  title: Text('Account Information'),
-                  trailing: IconButton(
-                    onPressed: () {}, 
-                    icon: Icon(Icons.chevron_right)
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (context) => AccountInfoScreens())
+                    );
+                  },
+                  child: ListTile(
+                    contentPadding: EdgeInsets.all(1),
+                    leading: CircleAvatar(
+                      child: Icon(Icons.account_circle_outlined),
+                    ),
+                    title: Text('Account Information'),
+                    trailing: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(
+                            builder: (context) => AccountInfoScreens()
+                          )
+                        );
+                      }, 
+                      icon: Icon(Icons.chevron_right)
+                    ),
                   ),
                 ),
                 ListTile(
@@ -133,7 +149,14 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     ),
                     title: Text('Physical Status'),
                     trailing: IconButton(
-                      onPressed: () {}, 
+                      onPressed: () {
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(
+                            builder: (context) => PhysicalActivityScreen()
+                          )
+                        );
+                      }, 
                       icon: Icon(Icons.chevron_right)
                     ),
                   ),
