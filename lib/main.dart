@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workout/firebase_options.dart';
+import 'package:workout/provider/user_provider.dart';
 import 'package:workout/provider/workout_activity_provider.dart';
 import 'package:workout/provider/workout_provider.dart';
 import 'package:workout/screen/getting_started_screen.dart';
@@ -29,6 +30,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) {
             return WorkoutActivityProvider();
+          }
+        ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return UserProvider();
           }
         )
       ],
