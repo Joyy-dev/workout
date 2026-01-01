@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:workout/provider/user_provider.dart';
 
@@ -17,9 +18,9 @@ class _AccountInfoScreensState extends State<AccountInfoScreens> {
   final _lastNameController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _forgetPassword = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
 
   File? selectedImage;
-  bool _isInitialized = false;
 
   @override
   void dispose() {
@@ -41,17 +42,31 @@ class _AccountInfoScreensState extends State<AccountInfoScreens> {
     return '${name.substring(0, 1)}****@$domain';
   }
 
+  Future<void> pickImageFromDevice() async {
+    debugPrint('Image picker tapped');
+
+
+    final XFile? image = await _picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80
+    );
+
+    debugPrint('picked image: ${image?.path}');
+
+    if (image != null) {
+      setState(() {
+        selectedImage = File(image.path);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<UserProvider>(context);
-    if (!_isInitialized && provider.user == null) {
-      provider.loadUser();
-      _isInitialized = true;
-    }
 
-    if (provider.user !=null && _firstNameController.text.isEmpty) {
-      _firstNameController.text = provider.user!.firstName;
-    }
+    // if (provider.user !=null && _firstNameController.text.isEmpty) {
+    //   _firstNameController.text = provider.user!.firstName;
+    // }
 
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
@@ -61,7 +76,12 @@ class _AccountInfoScreensState extends State<AccountInfoScreens> {
             child: CircularProgressIndicator(),
           );
         }
-        final user = snapshot.data!;
+        final authUser = snapshot.data!;
+        final provide = context.read<UserProvider>();
+        
+        if (provide.user == null) {
+          provide.loadUser(authUser.uid);
+        }
         return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -83,8 +103,8 @@ class _AccountInfoScreensState extends State<AccountInfoScreens> {
                 children: [
                   Center(
                     child: GestureDetector(
-                      onTap: () async {
-                        //
+                      onTap: () {
+                        pickImageFromDevice();
                       },
                       child: CircleAvatar(
                         radius: 90,
@@ -95,10 +115,15 @@ class _AccountInfoScreensState extends State<AccountInfoScreens> {
                   ),
                   SizedBox(height: 15,),
                   Center(
-                    child: Text(
-                      'Edit Profile Image',
-                      style: TextStyle(
-                        fontSize: 17
+                    child: GestureDetector(
+                      onTap: () {
+                        pickImageFromDevice();
+                      },
+                      child: Text(
+                        'Edit Profile Image',
+                        style: TextStyle(
+                          fontSize: 17
+                        ),
                       ),
                     ),
                   ),
@@ -152,7 +177,7 @@ class _AccountInfoScreensState extends State<AccountInfoScreens> {
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 10),
                         border: InputBorder.none,
-                        labelText: maskEmail(user.email!)
+                        labelText: maskEmail(authUser.email!)
                       ),
                     ),
                   ),
@@ -164,7 +189,7 @@ class _AccountInfoScreensState extends State<AccountInfoScreens> {
                   TextButton(
                     onPressed: () async {
                       await FirebaseAuth.instance.sendPasswordResetEmail(
-                        email: user.email!
+                        email: authUser.email!
                       );
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Password reset email sent'))
@@ -179,22 +204,52 @@ class _AccountInfoScreensState extends State<AccountInfoScreens> {
                     )
                   ),
                   SizedBox(height: 20,),
+
+
+                  Text(
+                    'User loaded: ${provider.user != null}, Loading: ${provider.isLoading}'
+                  ),
+
+
+
                   Center(
                     child: ElevatedButton(
-                      onPressed: provider.isLoading
+                      onPressed: provider.isLoading || provider.user == null
                       ? null
-                      : () {
-                        provider.updateProfile(
+                      : () async {
+                        await provider.updateProfile(
                           firstName: _firstNameController.text.trim(),
                           image: selectedImage
                         );
+
+                        if (!mounted) return;
+
+                          showDialog(
+                            context: context, 
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('Update successful!'),
+                                content: Text('Changes saved successfully!'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    }, 
+                                    child: Text('Ok')
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        
                       }, 
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF12005F),
                         foregroundColor: Colors.white,
                         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10)
                       ),
-                      child: provider.isLoading ?CircularProgressIndicator() : Text(
+                      child: provider.isLoading ? CircularProgressIndicator() : Text(
                         'Save',
                         style: TextStyle(
                           fontSize: 18

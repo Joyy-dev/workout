@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:workout/provider/user_provider.dart';
 import 'package:workout/screen/account_info_screens.dart';
 import 'package:workout/screen/physical_activity_screen.dart';
 
@@ -19,6 +21,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
@@ -45,7 +48,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     children: [
                       CircleAvatar(
                         radius: 120,
-                        backgroundImage: AssetImage('assets/images/gym.png'),
+                        backgroundImage: userProvider.user?.photoUrl != null ? NetworkImage(userProvider.user!.photoUrl!) : AssetImage('assets/images/gym.png') as ImageProvider,
                       ),
                       Positioned(
                         top: 180,
@@ -53,7 +56,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         child: CircleAvatar(
                           backgroundColor: Color(0xFF12005F),
                           child: IconButton(
-                            onPressed: () {}, 
+                            onPressed: () {
+                              Navigator.push(
+                                context, 
+                                MaterialPageRoute(builder: (context) => AccountInfoScreens())
+                              );
+                            }, 
                             icon: Icon(
                               Icons.edit,
                               size: 27,

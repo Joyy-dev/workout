@@ -19,9 +19,9 @@ class UserModel {
   factory UserModel.fromMap(Map<String, dynamic> data, String id) {
     return UserModel(
       id: id, 
-      firstName: data['firstname'], 
-      email: data['email'],
-      photoUrl: data['[photoUrl]']
+      firstName: data['firstname'] ?? '', 
+      email: data['email'] ?? '',
+      photoUrl: data['photoUrl']
     );
   }
 
@@ -43,11 +43,11 @@ class updateUser {
   }
 
   Future<void> updateUserData(UserModel user) async {
-    await _db.collection('users').doc(user.id).update(user.toMap());
+    await _db.collection('users').doc(user.id).set(user.toMap(), SetOptions(merge: true));
   }
 }
 
-class userData {
+class userStorage {
   final _storage = FirebaseStorage.instance;
 
   Future<String> uploadProfileImage(String id, File file) async {
