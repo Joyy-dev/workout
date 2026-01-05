@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:workout/provider/user_provider.dart';
 import 'package:workout/screen/history_screen.dart';
 import 'package:workout/screen/home_screens.dart';
 import 'package:workout/screen/my_account_screen.dart';
@@ -44,6 +47,15 @@ class _NavigationState extends State<Navigation> {
   void initState() {
     super.initState();
     _loadSelectedIndex();
+    _loadUser();
+  }
+
+  Future<void> _loadUser() async {
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+
+    if (firebaseUser == null) return;
+
+    await Provider.of<UserProvider>(context, listen: false).loadUser(firebaseUser.uid);
   }
 
   _loadSelectedIndex() async {

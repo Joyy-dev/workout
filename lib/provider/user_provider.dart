@@ -12,7 +12,15 @@ class UserProvider with ChangeNotifier{
   
   Future<void> loadUser(String uid) async {
     // final uid = FirebaseAuth.instance.currentUser!.uid;
-    user = await __firestore.getUser(uid);
+    // user = await __firestore.getUser(uid);
+    final result = await __firestore.getUser(uid);
+
+    if (result == null) {
+      debugPrint('Firestore User Not Found');
+      return;
+    }
+
+    user = result;
     notifyListeners();
   }
 

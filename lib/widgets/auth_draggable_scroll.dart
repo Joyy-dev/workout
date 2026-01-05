@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:workout/model/user_model.dart';
+import 'package:workout/provider/user_provider.dart';
 import 'package:workout/screen/home_screens.dart';
 
 class AuthDraggableScroll extends StatefulWidget {
@@ -33,13 +36,17 @@ class _AuthDraggableScrollState extends State<AuthDraggableScroll> {
 
       try {
         if (_isLogin) {
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
+          final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: email, 
             password: password
           );
+          await createUserIfNotExists(userCredential.user!);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Welcome back'))
           );
+          final uid = FirebaseAuth.instance.currentUser!.uid;
+
+          await Provider.of<UserProvider>(context, listen: false).loadUser(uid);
           Navigator.push(
             context, 
             MaterialPageRoute(builder: (context) => HomeScreens())
@@ -51,13 +58,17 @@ class _AuthDraggableScrollState extends State<AuthDraggableScroll> {
             );
             return;
           }
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          final UserCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: email, 
             password: password
           );
+          await createUserIfNotExists(UserCredential.user!);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Account successfully created!!'))
           );
+          final uid = FirebaseAuth.instance.currentUser!.uid;
+
+          await Provider.of<UserProvider>(context, listen: false).loadUser(uid);
           Navigator.push(
             context, 
             MaterialPageRoute(builder: (context) => HomeScreens())

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class UserModel {
@@ -37,13 +38,23 @@ class UserModel {
 class updateUser {
   final _db = FirebaseFirestore.instance;
 
-  Future<UserModel> getUser(String id) async {
-    final doc = await _db.collection('users').doc(id).get();
-    return UserModel.fromMap(doc.data()!, id);
-  }
+  // Future<UserModel> getUser(String id) async {
+  //   final doc = await _db.collection('users').doc(id).get();
+  //   return UserModel.fromMap(doc.data()!, id);
+  // }
 
   Future<void> updateUserData(UserModel user) async {
     await _db.collection('users').doc(user.id).set(user.toMap(), SetOptions(merge: true));
+  }
+
+  Future<UserModel?> getUser(String id) async {
+    final doc = await _db.collection('users').doc(id).get();
+
+    if (!doc.exists || doc.data() == null) {
+      return null;
+    }
+
+    return UserModel.fromMap(doc.data()!, id);
   }
 }
 
@@ -54,5 +65,18 @@ class userStorage {
     final ref = _storage.ref('profile_images/$id.jpg');
     await ref.putFile(file);
     return await ref.getDownloadURL();
+  }
+}
+
+
+Future<void> createUserIfNotExists(User firebaseUser) async {
+  final doc = await FirebaseFirestore.instance.collection('users').doc(firebaseUser.uid).get();
+
+  if (!doc.exists) {
+    await FirebaseFirestore.instance.collection('users').doc(firebaseUser.uid).set({
+      'email': firebaseUser.email,
+      'firstname': '',
+      'photoUrl': null
+    });
   }
 }
