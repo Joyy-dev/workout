@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 
 class UserModel {
   final String id;
@@ -16,6 +17,22 @@ class UserModel {
     required this.email,
     this.photoUrl
   });
+
+  static final userRef = FirebaseFirestore.instance.collection('users');
+
+  Future<void> addWorkout() async {
+    await userRef.doc(id).collection('workouts').add(
+      {
+        'calories': 350,
+        'duration': 45,
+        'date': Timestamp.now()
+      }
+    );
+  }
+
+  Stream<QuerySnapshot> getUserWorkoutsStream()  {
+    return userRef.doc(id).collection('workouts').orderBy('date', descending: true).snapshots();
+  }
 
   factory UserModel.fromMap(Map<String, dynamic> data, String id) {
     return UserModel(
@@ -35,7 +52,7 @@ class UserModel {
   }
 }
 
-class updateUser {
+class UpdateUser {
   final _db = FirebaseFirestore.instance;
 
   // Future<UserModel> getUser(String id) async {
@@ -44,7 +61,13 @@ class updateUser {
   // }
 
   Future<void> updateUserData(UserModel user) async {
-    await _db.collection('users').doc(user.id).set(user.toMap(), SetOptions(merge: true));
+    try {
+      await _db.collection('users')
+      .doc(user.id).set(user.toMap(), 
+      SetOptions(merge: true));
+    } catch (e) {
+      debugPrint('Error  updating user: $e');
+    }
   }
 
   Future<UserModel?> getUser(String id) async {
@@ -58,13 +81,18 @@ class updateUser {
   }
 }
 
-class userStorage {
+class UserStorage {
   final _storage = FirebaseStorage.instance;
 
-  Future<String> uploadProfileImage(String id, File file) async {
-    final ref = _storage.ref('profile_images/$id.jpg');
-    await ref.putFile(file);
-    return await ref.getDownloadURL();
+  Future<String?> uploadProfileImage(String id, File file) async {
+    try {
+      final ref = _storage.ref('profile_images/$id.jpg');
+      await ref.putFile(file);
+      return await ref.getDownloadURL();
+    } catch (e) {
+      debugPrint('image upload error: $e');
+      return 'Failed';
+    }
   }
 }
 
@@ -76,7 +104,8 @@ Future<void> createUserIfNotExists(User firebaseUser) async {
     await FirebaseFirestore.instance.collection('users').doc(firebaseUser.uid).set({
       'email': firebaseUser.email,
       'firstname': '',
-      'photoUrl': null
+      'photoUrl': null,
+      'createdAt': Timestamp.now()
     });
   }
 }

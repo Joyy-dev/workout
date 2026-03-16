@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:workout/model/user_model.dart';
 
 class UserProvider with ChangeNotifier{
-  final __firestore = updateUser();
-  final _storage = userStorage();
+  final __firestore = UpdateUser();
+  final _storage = UserStorage();
   UserModel? user;
   bool isLoading = false;
   

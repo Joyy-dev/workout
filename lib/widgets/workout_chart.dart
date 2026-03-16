@@ -133,21 +133,6 @@ class _WorkoutChartState extends State<WorkoutChart> {
                             ),
                           );
                         },
-                        // getTitlesWidget: (value, meta) {
-                        //   final 
-                        //   // const months = [
-                        //   //   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-                        //   // ];
-                        //   // if (value.toInt() < 0 || value.toInt() >= months.length) {
-                        //   //   return SizedBox.shrink();
-                        //   // }
-                        //   // return Text(
-                        //   //   months[value.toInt()],
-                        //   //   style: TextStyle(
-                        //   //     fontSize: 12
-                        //   //   ),
-                        //   // );
-                        // },
                       )
                     )
                   ),
